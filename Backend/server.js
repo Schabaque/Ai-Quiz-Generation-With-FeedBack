@@ -1,0 +1,51 @@
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+//const cookieParser = require("cookie-parser");
+//const expressJwt = require("express-jwt");
+
+const connectDB = require('./config/connectionDB');
+
+//init server : 
+const app = express();
+
+//my .env file
+require("dotenv").config();
+
+//middleware
+app.use(express.json());
+app.use(bodyParser.urlencoded({extended:true}));
+
+//cors : 
+app.use(cors());
+//************************************************************************** */
+// ------------------------------------------------------------ routes ----------------------------------------------------------------------------
+app.use("/api/auth",require('./routes/authRoute'));
+app.use("/api/prof",require('./routes/Professor'));
+app.use("/api/students",require('./routes/Student'));
+app.use("/api/students",require('./routes/Inscription'));
+app.use("/api/Classrooms",require('./routes/Classroom'));
+app.use("/api/questions",require('./routes/QuestionRoutes'));
+app.use("/api/answers",require('./routes/AnswerRoutes'));
+app.use("/api/examens",require('./routes/ExamRoutes'));
+app.use("/api/password",require("./routes/passwordRoute"));
+app.use("/api/submitExam",require("./routes/SubmitExamRoutes"));
+// Topics (teacher provided)
+app.use("/api/topics", require('./routes/TopicRoutes'));
+app.use("/api/quizzes", require('./routes/QuizRoutes'));
+app.use("/api/submissions", require('./routes/SubmissionRoutes'));
+app.use("/api/analytics", require('./routes/AnalyticsRoutes'));
+
+
+//------------------------------------------------------------------------------------
+
+//port server : 
+const port = process.env.PORT || 5000;
+connectDB();
+
+app.listen(port,(error)=>{
+    if(error) console.log("error in server");
+    console.log(`server start in port ${port}`);
+});
+ 
+

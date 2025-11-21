@@ -1,0 +1,91 @@
+import React,{useEffect, useState} from 'react'
+import {Sidebar, Footer, Header, Container, TitleSection} from '../components';
+import {FaUserGraduate, FaSchool, FaBook, FaDollarSign} from 'react-icons/fa';
+
+import Barre from '../AnalyticsItems/Barre'
+import Linechart from '../AnalyticsItems/Line';
+import HomeCard from '../AnalyticsItems/analyticsCard';
+import Loader from './Loader';
+
+const Analytics = () => {
+  
+       const [loading, setLoading] = useState(true);
+
+        useEffect(()=>{
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
+        },[]);
+
+    
+    const data = [
+                {annee:"2017",Nbr_Etudiants:105},
+                {annee:"2018",Nbr_Etudiants:120},
+                {annee:"2019",Nbr_Etudiants:65},
+                {annee:"2020",Nbr_Etudiants:55},
+                {annee:"2021",Nbr_Etudiants:85}
+            ];
+    const data_line =  [
+        {
+          "name": "Page A",
+          "uv": 4000,
+          "pv": 2400,
+          "amt": 2400
+        },
+        {
+          "name": "Page B",
+          "uv": 3000,
+          "pv": 1398,
+          "amt": 2210
+        },{
+            "name": "Page C",
+            "uv": 3000,
+            "pv": 1398,
+            "amt": 2210
+          },{
+            "name": "Page D",
+            "uv": 2000,
+            "pv": 9800,
+            "amt": 2290
+          }
+        ];
+
+  return (
+    <>
+    {loading ? (
+        <Loader />
+      ) : (
+    <div id="wrapper">
+      <Sidebar/>
+      <div className="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+          <Header/>
+          <TitleSection page="Dashboard" modal="#" description="Generate Reports" btn="Reports"/>
+          <Container>
+            <div className='row'>
+            <HomeCard titre="Number of Students" val="120" color="#1f8316">
+                <FaUserGraduate/>
+            </HomeCard>
+            <HomeCard titre="Number of Classes" val="5" color="#054dd3">
+                <FaSchool/>
+            </HomeCard>
+            <HomeCard titre="Number of Exams" val="10" color="#eb5b13">
+                <FaBook/>
+            </HomeCard>
+            <HomeCard titre="OpenAI Balance" val="15$" color="#bec106">
+            <FaDollarSign/>
+            </HomeCard>
+                <Barre data={data}/>
+                <Linechart data={data_line}/>
+                </div>
+          </Container>
+        </div>
+        <Footer/>
+      </div>
+    </div>)
+    }
+    </>
+  )
+}
+
+export default Analytics
